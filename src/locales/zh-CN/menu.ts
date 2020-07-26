@@ -1,6 +1,6 @@
 export default {
   'menu.welcome': '欢迎',
-  'menu.ddd': '晚安',
+  'menu.myPage': '增删改查',
   'menu.test': '测试',
   'menu.test.aaa': '测试1',
   'menu.more-blocks': '更多区块',

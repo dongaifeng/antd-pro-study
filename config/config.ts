@@ -102,10 +102,10 @@ export default defineConfig({
               ]
             },
             {
-              name: 'ddd',
+              name: 'myPage',
               icon: 'table',
-              path: '/ddd',
-              component: './ddd'
+              path: '/myPage',
+              component: './myPage'
             },
             {
               component: './404',

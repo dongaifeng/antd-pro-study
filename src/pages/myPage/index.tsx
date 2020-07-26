@@ -11,6 +11,10 @@ const FormItem = Form.Item;
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
+const layout = {
+  labelCol: {span: 6},
+  wrapperCol: {span: 18},
+}
 
 
 
@@ -32,9 +36,47 @@ const MyForm: FC<FormProps> = (props) => {
     })
   }
 
+  const onFinish = (values: { [key: string]: any }) => {
+    dispatch({
+      type: 'ddd/getName',
+      payload: '董喧起'
+    })
+  }
+
+  const onFinishFailed = ({values, errorFields, outOfDate}: {values:{ [key: string]: any }, errorFields: any, outOfDate: any}) => {
+    // eslint-disable-next-line no-console
+    console.log(values, errorFields, outOfDate)
+  }
+
+  const onValuesChange = (changedFields: {[key: string]: any}, allFields: any) => {
+    const {name } = changedFields;
+    // eslint-disable-next-line no-console
+    console.log(name, allFields);
+  }
+
 
   return (
     <PageHeaderWrapper>
+      <Form
+        {...layout}
+        hideRequiredMark
+        style={{marginTop: 8}}
+        form={form}
+        name="my_form"
+        initialValues={{username:'董爱锋'}}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        onValuesChange={onValuesChange}
+      >
+        <FormItem
+          label="用户名"
+          name="username"
+        >
+          <Input />
+
+        </FormItem>
+      </Form>
+
     
     
       哈哈哈 { myName }
