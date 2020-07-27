@@ -1,33 +1,47 @@
 import { Effect, Reducer} from 'umi';
-import { quertList } from './service'
-
+import { quertList, queryData, queryTableList } from './service'
+import { message } from 'antd';
+import { List } from './data.d';
 
 export interface StateType {
-  myName: string
+  myName: string;
+  list: List[]
 }
 
 export interface ModelType {
   namespace: string;
   state: StateType;
   effects: {
-    submitRegularForm: Effect;
+    submitData: Effect;
     getName: Effect;
+    tableList: Effect;
   };
   reducers: {
-    ddd: Reducer<StateType>
+    ddd: Reducer<StateType>;
+    setTableList: Reducer<StateType>;
   }
 }
 
 const Model: ModelType = {
-  namespace: 'ddd',
+  namespace: 'myForm',
 
   state: {
-    myName: '董爱锋'
+    myName: '董爱锋',
+    list: []
   },
 
   effects: {
-    *submitRegularForm({ payload }, { call, put }) {
-      
+    *tableList({ payload }, { call, put }) {
+      const {data } = yield call(queryTableList, payload);
+      yield put({
+        type: 'setTableList',
+        payload: Array.isArray(data) ? data : []
+      })
+    },
+
+    *submitData({ payload }, { call, put }) {
+      yield call(queryData, payload)
+      message.success('提交成功')
     },
 
     *getName({ payload }, { call, put }) {
@@ -41,11 +55,17 @@ const Model: ModelType = {
   },
 
   reducers: {
-    ddd(state, action) {
+    ddd(state: StateType, action) {
       
       return {
         ...state,
         myName: action.payload,
+      }
+    },
+    setTableList(state: StateType, action) {
+      return {
+        ...state,
+        list: state.list.concat(action.payload)
       }
     }
   }
