@@ -19,6 +19,7 @@ export interface ModelType {
   reducers: {
     ddd: Reducer<StateType>;
     setTableList: Reducer<StateType>;
+    resetTableList: Reducer<StateType>;
   }
 }
 
@@ -40,7 +41,11 @@ const Model: ModelType = {
     },
 
     *submitData({ payload }, { call, put }) {
-      yield call(queryData, payload)
+      const {data} = yield call(queryData, payload)
+      yield put({
+        type: 'resetTableList',
+        payload: Array.isArray(data) ? data : []
+      })
       message.success('提交成功')
     },
 
@@ -66,6 +71,12 @@ const Model: ModelType = {
       return {
         ...state,
         list: state.list.concat(action.payload)
+      }
+    },
+    resetTableList(state: StateType, action) {
+      return {
+        ...state,
+        list: action.payload
       }
     }
   }

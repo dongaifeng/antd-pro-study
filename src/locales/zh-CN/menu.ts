@@ -1,6 +1,7 @@
 export default {
   'menu.welcome': '欢迎',
   'menu.myPage': '增删改查',
+  'menu.gaojiForm': '高级表单',
   'menu.test': '测试',
   'menu.test.aaa': '测试1',
   'menu.more-blocks': '更多区块',

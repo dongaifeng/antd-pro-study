@@ -8,13 +8,7 @@ function ddd(req: Request, res: Response) {
   });
 }
 
-function forms(req: Request, res: Response) {
-  console.log(req.query)
-  return res.json({
-    message: 'OK',
-    data: req.query
-  })
-}
+
 
 const genList = (current: number, pageSize: number) => {
   let tableListDataSource: List[] = [];
@@ -41,6 +35,17 @@ function getList (req: Request, res: Response) {
     success: true,
   }
 
+  return res.json(result)
+}
+
+function forms(req: Request, res: Response) {
+  let tableListDataSource = genList(10, 3);
+  const result = {
+    data: tableListDataSource,
+    total: tableListDataSource.length,
+    success: true,
+  }
+  
   return res.json(result)
 }
 

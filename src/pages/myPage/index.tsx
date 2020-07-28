@@ -12,14 +12,15 @@ const FormItem = Form.Item;
 const { Option } = Select;
 
 const layout = {
-  labelCol: {span: 10},
-  wrapperCol: {span: 14},
+  labelCol: {span: 8},
+  wrapperCol: {span: 16},
+  layout: 'inline'
 }
 
 const submitFormLayout = {
   wrapperCol: {
     xs: { span: 24, offset: 0 },
-    sm: { span: 10, offset: 9 },
+    sm: { span: 24, offset: 9 },
   },
 };
 
@@ -84,6 +85,7 @@ const MyForm: FC<FormProps> = (props) => {
   //     payload: '董喧起'
   //   })
   // }
+  
   // 提交表单且数据验证成功后回调事件
   const onFinish = (values: { [key: string]: any }) => {
     dispatch({

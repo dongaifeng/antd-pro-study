@@ -108,6 +108,12 @@ export default defineConfig({
               component: './myPage'
             },
             {
+              name: 'gaojiForm',
+              icon: 'table',
+              path: '/gaojiForm',
+              component: './gaoji-form'
+            },
+            {
               component: './404',
             },
           ],
