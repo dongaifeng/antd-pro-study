@@ -1,6 +1,6 @@
 import { Effect } from 'umi';
 import { message } from 'antd';
-import Model from '@/models/login';
+import { submit } from './service';
 
 export interface ModelType {
   namespace: string;
@@ -17,7 +17,7 @@ const Model: ModelType = {
 
   effects: {
     *submit({payload}, {call}) {
-      yield call()
+      yield call(submit, payload);
       message.success("提交成功！")
     }
   }

@@ -50,9 +50,22 @@ function forms(req: Request, res: Response) {
 }
 
 
+function fakeSubmit(req: Request, res: Response) {
+  console.log(req.body)
+  const result = {
+    data: req.body,
+    success: true
+  }
+  setTimeout(() => {
+    return res.json(result)
+  }, 2000)
+}
+
+
 
 export default {
   'POST /api/forms': forms,
   'GET  /api/ddd': ddd,
-  'POST /api/list': getList
+  'POST /api/list': getList,
+  'POST /api/fakeSubmit': fakeSubmit
 };

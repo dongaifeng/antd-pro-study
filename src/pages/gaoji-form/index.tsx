@@ -48,8 +48,47 @@ const GaojiForm: FC<GaojiFormProps> = ({ submitting, dispatch }) => {
   const [form] = Form.useForm();
   const [error, setError] = useState<ErrorField[]>([]);
   const getErrorInfo = (errors: ErrorField[]) => {
+    console.log(errors, '<------')
+    const errorCount = error.filter(item => item.errors.length > 0).length;
 
+    if(!errors || errorCount === 0 ) {
+      return null;
+    }
 
+    const errorList = errors.map(item => {
+      if(!item || item.errors.length === 0) {
+        return null;
+
+      }
+
+      const key = item.name[0] as string
+      return (
+        <li key={key} className={styles.errorListItem} >
+          <CloseCircleOutlined className={styles.errorIcon} />
+          <div className={styles.errorMessage}>{item.errors[0]}</div>
+          <div className={styles.errorField}>{item.name[0]}</div>
+        </li>
+      )
+    })
+
+    return (<span className={styles.errorIcon}>
+      <Popover 
+        title="错误信息"
+        content={errorList}
+        overlayClassName={styles.errorPopover}
+        trigger="click"
+        getPopupContainer={
+          (trigger: HTMLElement) => {
+            return trigger
+          }
+        }
+      >
+        <CloseCircleOutlined />
+       
+      </Popover>
+       {errorCount}
+       </span>
+    )
   }
 
   // 定义values的类型别名   
@@ -65,8 +104,8 @@ const GaojiForm: FC<GaojiFormProps> = ({ submitting, dispatch }) => {
     })
     
   }
-  const onFinishFailed = () => {
-
+  const onFinishFailed = (errorInfo: any) => {
+    setError(errorInfo.errorFields);
   }
 
 
@@ -116,8 +155,17 @@ const GaojiForm: FC<GaojiFormProps> = ({ submitting, dispatch }) => {
                 />
               </Form.Item>
             </Col>
+
+            <Col>
+              <Form.Item>
+                <Button style={{marginRight: 10}} onClick={() => form.resetFields()}>取消</Button>
+                <Button type="primary" onClick={() => form.submit()} loading={submitting}>提交</Button>
+                { getErrorInfo(error) }
+              </Form.Item>
+            </Col>
         </Row>
       </Card>
+
 
     </Form>
   )
@@ -132,6 +180,6 @@ type P = {
 export default connect(
   // mapStateToProps      (state) => ({ })
   ({loading}: P) => ({ 
-    submitting: loading.effects['formAndadvancedForm/submitAdvancedForm'],
+    submitting: loading.effects['gaojiForm/submit'],
   })
-)(GaojiForm);
+)(GaojiForm); 
