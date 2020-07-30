@@ -7,6 +7,8 @@ import { connect, Dispatch } from 'umi';
 
 import styles from './style.less';
 
+import TableForm  from "./components/TableForm";
+
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
@@ -61,6 +63,10 @@ const GaojiForm: FC<GaojiFormProps> = ({ submitting, dispatch }) => {
 
       }
 
+
+
+
+      
       const key = item.name[0] as string
       return (
         <li key={key} className={styles.errorListItem} >
@@ -164,6 +170,12 @@ const GaojiForm: FC<GaojiFormProps> = ({ submitting, dispatch }) => {
               </Form.Item>
             </Col>
         </Row>
+      </Card>
+
+      <Card title="列表" className={styles.card} bordered>
+        <Form.Item name="members">
+          <TableForm />
+        </Form.Item>
       </Card>
 
 
