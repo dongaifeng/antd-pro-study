@@ -84,11 +84,45 @@ const TableForm: FC<TableFormProps> = ({value, onChange}) => {
     }, 1000)
 
   }
-  const cancel = (e: React.MouseEvent | React.KeyboardEvent, key: string) => {
+  const cancel = (e: React.MouseEvent, key: string) => {
+    setClickCancel(true);
+    e.preventDefault();
+    const newData = [...(data as TableFormDateType[])];
+    let cacheData = [];
+
+    // 复制data数据为newData，遍历newData 找到key对应的的那一条原始数据，他保存在cacheOriginData中
+    // 找到后 利用合并的方式 覆盖掉被我们修改了的这条数据
+    // 然后从缓存原始数据的地方 删除这一条数据
+    // 把组装的数据 重新setData
+    cacheData = newData.map( i => {
+
+      if(i.key === key) {
+        if(cacheOriginData[key]) {
+          const originItem = {
+            ...i,
+            ...cacheOriginData[key],
+            editable: false,
+          }
+
+          delete cacheOriginData[key];
+          setCacheOriginData(cacheOriginData);
+          return originItem;
+        }
+      }
+      return i;
+    })
+
+    setData(cacheData);
+    setClickCancel(false);
 
   }
   const remove = ( key: string) => {
+    const newData = data?.filter(i => i.key !== key) as TableFormDateType[];;
 
+    setData(newData)
+    if(onChange) {
+      onChange(newData)
+    }
   }
   const toggleEditable = (e: React.MouseEvent | React.KeyboardEvent, key: string) => {
     e.preventDefault();

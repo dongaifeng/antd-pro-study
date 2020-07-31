@@ -113,6 +113,13 @@ export default defineConfig({
               path: '/gaojiForm',
               component: './gaoji-form'
             },
+
+            {
+              name: 'center',
+              icon: 'table',
+              path: '/center',
+              component: './center'
+            },
             {
               component: './404',
             },

@@ -1,6 +1,7 @@
 export default {
   'menu.welcome': 'Welcome',
   'menu.gaojiForm': 'advanced-form',
+  'menu.center': 'User Info',
   'menu.more-blocks': 'More Blocks',
   'menu.home': 'Home',
   'menu.admin': 'Admin',
